@@ -17,3 +17,7 @@ the "Squeeze Conflicts" command will remove the conflict.
 
 1. Edit the two sides of the conflict to make them identical (or to gradually reduce their difference)
 2. CTRL + SHIFT + P -> Squeeze Conflicts
+
+![Usage 1](./usage1.gif)
+
+![Usage 2](./usage2.gif)
