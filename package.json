@@ -4,6 +4,10 @@
     "description": "Simplifies the resolution of Git merge conflicts",
     "version": "0.0.1",
     "publisher": "angelo-mollame",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/angelo-mollame/conflict-squeezer"
+    },
     "engines": {
         "vscode": "^1.20.0"
     },
