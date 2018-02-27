@@ -3,7 +3,7 @@
     "displayName": "Conflict Squeezer",
     "description": "Simplifies the resolution of Git merge conflicts",
     "version": "0.0.1",
-    "publisher": "angelo-mollame",
+    "publisher": "angelomollame",
     "repository": {
         "type": "git",
         "url": "https://github.com/angelo-mollame/conflict-squeezer"
