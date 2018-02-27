@@ -11,13 +11,13 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:extension.sayHello"
+        "onCommand:conflictSqueezer.squeezeConflicts"
     ],
-    "main": "./out/extension",
+    "main": "./out/Extension",
     "contributes": {
         "commands": [{
-            "command": "extension.sayHello",
-            "title": "Hello World"
+            "command": "conflictSqueezer.squeezeConflicts",
+            "title": "Squeeze Conflicts"
         }]
     },
     "scripts": {
