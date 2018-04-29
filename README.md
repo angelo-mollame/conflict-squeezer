@@ -21,3 +21,11 @@ the "Squeeze Conflicts" command will remove the conflict.
 ![Usage 1](./usage1.gif)
 
 ![Usage 2](./usage2.gif)
+
+## Change Log
+
+### 0.0.3
+
+- Added support for diff3 format.
+- Added support for \r line separator.
+- Fixed bugs.

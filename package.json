@@ -2,7 +2,7 @@
     "name": "conflict-squeezer",
     "displayName": "Conflict Squeezer",
     "description": "Simplifies the resolution of Git merge conflicts through the editor",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "publisher": "angelomollame",
     "repository": {
         "type": "git",
