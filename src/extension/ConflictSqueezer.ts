@@ -4,7 +4,14 @@ import * as vscode from "vscode";
 import { Parser } from "./Parser";
 
 export class ConflictSqueezer {
-    public squeezeConflicts(): void {
+    public static getSqueezedText(text: string): string {
+        return Parser.parse(text)
+            .map(section => section.getText())
+            .filter(text => text.length > 0)
+            .join("");
+    }
+
+    public static squeezeConflicts(): void {
         const editor: vscode.TextEditor | undefined = vscode.window.activeTextEditor;
 
         if (!editor) {
@@ -22,12 +29,5 @@ export class ConflictSqueezer {
         const edit: vscode.WorkspaceEdit = new vscode.WorkspaceEdit();
         edit.replace(document.uri, fullRange, newText);
         vscode.workspace.applyEdit(edit);
-    }
-
-    private static getSqueezedText(text: string): string {
-        return Parser.parse(text)
-            .map(section => section.getText())
-            .filter(text => text.length > 0)
-            .join("");
     }
 }
