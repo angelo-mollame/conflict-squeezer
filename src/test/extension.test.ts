@@ -238,6 +238,20 @@ function runTestsWithLineSeparator(lineSeparator: string): void {
 
             testSqueeze(inputText, expectedOutputText);
         });
+
+    runTestWithLineSeparator(
+        "incomplete conflict",
+        lineSeparator,
+        () => {
+            const inputText =
+                "aaa" + lineSeparator +
+                "<<<<<<< HEAD" + lineSeparator +
+                "bbb1" + lineSeparator +
+                "=======" + lineSeparator +
+                "bbb2" + lineSeparator;
+
+            verifyNoChanges(inputText);
+        });
 }
 
 function testSqueeze(inputText: string, expectedOutputText: string): void {
