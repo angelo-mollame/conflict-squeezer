@@ -43,12 +43,7 @@ function runTestsWithLineSeparator(lineSeparator: string): void {
                 "bbb" + lineSeparator +
                 "ccc" + lineSeparator;
 
-            const expectedOutputText =
-                "aaa" + lineSeparator +
-                "bbb" + lineSeparator +
-                "ccc" + lineSeparator;
-
-            testSqueeze(inputText, expectedOutputText);
+            verifyNoChanges(inputText);
         });
 
     runTestWithLineSeparator(
@@ -88,6 +83,36 @@ function runTestsWithLineSeparator(lineSeparator: string): void {
                 "ccc" + lineSeparator;
 
             testSqueeze(inputText, expectedOutputText);
+        });
+
+    runTestWithLineSeparator(
+        "blank-line ours",
+        lineSeparator,
+        () => {
+            const inputText =
+                "aaa" + lineSeparator +
+                "<<<<<<< HEAD" + lineSeparator +
+                "=======" + lineSeparator +
+                "bbb" + lineSeparator +
+                ">>>>>>> master" + lineSeparator +
+                "ccc" + lineSeparator;
+
+            verifyNoChanges(inputText);
+        });
+
+    runTestWithLineSeparator(
+        "blank-line theirs",
+        lineSeparator,
+        () => {
+            const inputText =
+                "aaa" + lineSeparator +
+                "<<<<<<< HEAD" + lineSeparator +
+                "bbb" + lineSeparator +
+                "=======" + lineSeparator +
+                ">>>>>>> master" + lineSeparator +
+                "ccc" + lineSeparator;
+
+            verifyNoChanges(inputText);
         });
 
     runTestWithLineSeparator(
@@ -202,4 +227,9 @@ function runTestsWithLineSeparator(lineSeparator: string): void {
 function testSqueeze(inputText: string, expectedOutputText: string): void {
     const actualOutputText: string = ConflictSqueezer.getSqueezedText(inputText);
     assert.equal(actualOutputText, expectedOutputText);
+}
+
+function verifyNoChanges(inputText: string): void {
+    const expectedOutputText = inputText;
+    testSqueeze(inputText, expectedOutputText);
 }
