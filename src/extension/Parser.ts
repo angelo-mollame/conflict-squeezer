@@ -8,9 +8,39 @@ import { StringUtils, StartsWithResult } from "./StringUtils";
 import { TextSection } from "./TextSection";
 
 export class Parser {
+    public static getLines(text: string): string[] {
+        const lines: string[] = [];
+        const textLength: number = text.length;
+
+        let currentCharacters: string[] = [];
+
+        for (let i: number = 0; i < textLength; i++) {
+            const character: string = text.charAt(i);
+
+            if (character === "\n") {
+                currentCharacters.push(character);
+                lines.push(currentCharacters.join(""));
+                currentCharacters = [];
+            } else {
+                if (i > 0 && text.charAt(i - 1) === "\r") {
+                    lines.push(currentCharacters.join(""));
+                    currentCharacters = [ character ];
+                } else {
+                    currentCharacters.push(character);
+                }
+            }
+        }
+
+        if (currentCharacters.length > 0) {
+            lines.push(currentCharacters.join(""));
+        }
+
+        return lines;
+    }
+
     public static parse(text: string): ISection[] {
         const sections: ISection[] = [];
-        const lines: string[] = text.split(Constants.lineSeparator);
+        const lines: string[] = Parser.getLines(text);
 
         // State 0: outside the conflict
         // State 1: between "<<<<<<< our-branch" and "======="

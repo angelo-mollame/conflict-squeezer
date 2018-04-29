@@ -1,6 +1,5 @@
 "use strict";
 
-import { Constants } from "./Constants";
 import { ISection } from "./ISection";
 
 export class TextSection implements ISection {
@@ -11,6 +10,6 @@ export class TextSection implements ISection {
     }
 
     public getText(): string {
-        return this.lines.join(Constants.lineSeparator);
+        return this.lines.join("");
     }
 }

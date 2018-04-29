@@ -47,8 +47,8 @@ export class Conflict {
         const equalBottomLines: string[] = this.ourLines.slice(
             this.ourLines.length - bottomCursor, this.ourLines.length);
 
-        const equalTopText: string = equalTopLines.join(Constants.lineSeparator);
-        const equalBottomText: string = equalBottomLines.join(Constants.lineSeparator);
+        const equalTopText: string = equalTopLines.join("");
+        const equalBottomText: string = equalBottomLines.join("");
 
         let parts: string[];
 
@@ -61,15 +61,15 @@ export class Conflict {
             parts = [
                 equalTopText,
                 Constants.conflictMarker1 + this.textAfterMarker1,
-                ourUnequalLines.join(Constants.lineSeparator),
+                ourUnequalLines.join(""),
                 Constants.conflictMarker2 + this.textAfterMarker2,
-                theirUnequalLines.join(Constants.lineSeparator),
+                theirUnequalLines.join(""),
                 Constants.conflictMarker3 + this.textAfterMarker3,
                 equalBottomText
             ];
         }
 
-        return parts.filter(part => part.length > 0).join(Constants.lineSeparator);
+        return parts.filter(part => part.length > 0).join("");
     }
 
     public addOurLine(line: string): void {

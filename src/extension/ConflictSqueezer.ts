@@ -1,7 +1,6 @@
 "use strict";
 
 import * as vscode from "vscode";
-import { Constants } from "./Constants";
 import { Parser } from "./Parser";
 
 export class ConflictSqueezer {
@@ -29,6 +28,6 @@ export class ConflictSqueezer {
         return Parser.parse(text)
             .map(section => section.getText())
             .filter(text => text.length > 0)
-            .join(Constants.lineSeparator);
+            .join("");
     }
 }
