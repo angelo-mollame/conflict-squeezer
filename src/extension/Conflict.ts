@@ -18,8 +18,8 @@ export class Conflict {
         const minNumberOfLines: number = Math.min(this.ourLines.length, this.theirLines.length);
         const maxNumberOfLines: number = Math.max(this.ourLines.length, this.theirLines.length);
 
-        // Top cursor will contain the number of equal lines from the top.
-        // Bottom cursor will contain the number of equal lines from the bottom.
+        // Top cursor will contain the number of identical lines from the top.
+        // Bottom cursor will contain the number of identical lines from the bottom.
         let topCursor: number = 0;
         let bottomCursor: number = 0;
 
@@ -46,21 +46,24 @@ export class Conflict {
             }
         }
 
-        const equalTopLines: string[] = this.ourLines.slice(0, topCursor);
+        const identicalTopLines: string[] = this.ourLines.slice(0, topCursor);
 
-        const equalBottomLines: string[] = this.ourLines.slice(
+        const identicalBottomLines: string[] = this.ourLines.slice(
             this.ourLines.length - bottomCursor, this.ourLines.length);
 
         let parts: string[];
 
         if (topCursor + bottomCursor === maxNumberOfLines) {
             parts = [
-                ...equalTopLines,
-                ...equalBottomLines
+                ...identicalTopLines,
+                ...identicalBottomLines
             ];
         } else {
-            const ourUnequalLines: string[] = this.ourLines.slice(topCursor, this.ourLines.length - bottomCursor);
-            const theirUnequalLines: string[] = this.theirLines.slice(topCursor, this.theirLines.length - bottomCursor);
+            const ourNonIdenticalLines: string[] =
+                this.ourLines.slice(topCursor, this.ourLines.length - bottomCursor);
+
+            const theirNonIdenticalLines: string[] =
+                this.theirLines.slice(topCursor, this.theirLines.length - bottomCursor);
 
             let originalParts: string[];
 
@@ -74,14 +77,14 @@ export class Conflict {
             }
 
             parts = [
-                ...equalTopLines,
+                ...identicalTopLines,
                 Constants.conflictMarkerOurs + this.textAfterMarkerOurs,
-                ...ourUnequalLines,
+                ...ourNonIdenticalLines,
                 ...originalParts,
                 Constants.conflictMarkerTheirs + this.textAfterMarkerTheirs,
-                ...theirUnequalLines,
+                ...theirNonIdenticalLines,
                 Constants.conflictMarkerEnd + this.textAfterMarkerEnd,
-                ...equalBottomLines
+                ...identicalBottomLines
             ];
         }
 
