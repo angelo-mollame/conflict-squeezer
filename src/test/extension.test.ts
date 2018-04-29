@@ -47,6 +47,22 @@ function runTestsWithLineSeparator(lineSeparator: string): void {
         });
 
     runTestWithLineSeparator(
+        "conflict not resolved",
+        lineSeparator,
+        () => {
+            const inputText =
+                "aaa" + lineSeparator +
+                "<<<<<<< HEAD" + lineSeparator +
+                "bbb1" + lineSeparator +
+                "=======" + lineSeparator +
+                "bbb2" + lineSeparator +
+                ">>>>>>> master" + lineSeparator +
+                "ccc" + lineSeparator;
+
+            verifyNoChanges(inputText);
+        });
+
+    runTestWithLineSeparator(
         "conflict removed",
         lineSeparator,
         () => {
