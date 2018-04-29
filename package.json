@@ -17,7 +17,7 @@
     "activationEvents": [
         "onCommand:conflictSqueezer.squeezeConflicts"
     ],
-    "main": "./out/Extension",
+    "main": "./out/extension/Extension",
     "contributes": {
         "commands": [{
             "command": "conflictSqueezer.squeezeConflicts",
