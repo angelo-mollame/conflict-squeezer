@@ -35,20 +35,21 @@ export class Parser {
                 }
 
                 currentConflict = new Conflict();
-                currentConflict.setOurBranch(startsWithMarker1Result.remainingText);
+                currentConflict.setTextAfterMarker1(startsWithMarker1Result.remainingText);
                 state = 1;
             } else if (startsWithMarker2Result.success) {
                 if (state !== 1) {
                     throw new Error("Unexpected conflict marker");
                 }
 
+                currentConflict!.setTextAfterMarker2(startsWithMarker2Result.remainingText);
                 state = 2;
             } else if (startsWithMarker3Result.success) {
                 if (state !== 2) {
                     throw new Error("Unexpected conflict marker");
                 }
 
-                currentConflict!.setTheirBranch(startsWithMarker3Result.remainingText);
+                currentConflict!.setTextAfterMarker3(startsWithMarker3Result.remainingText);
                 sections.push(new ConflictSection(currentConflict!));
                 currentConflict = undefined;
                 state = 0;

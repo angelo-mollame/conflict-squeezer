@@ -3,8 +3,9 @@
 import { Constants } from "./Constants";
 
 export class Conflict {
-    private ourBranch: string | undefined = undefined;
-    private theirBranch: string | undefined = undefined;
+    private textAfterMarker1: string | undefined = undefined;
+    private textAfterMarker2: string | undefined = undefined;
+    private textAfterMarker3: string | undefined = undefined;
 
     private ourLines: string[] = [];
     private theirLines: string[] = [];
@@ -59,11 +60,11 @@ export class Conflict {
 
             parts = [
                 equalTopText,
-                Constants.conflictMarker1 + this.ourBranch,
+                Constants.conflictMarker1 + this.textAfterMarker1,
                 ourUnequalLines.join(Constants.lineSeparator),
-                Constants.conflictMarker2,
+                Constants.conflictMarker2 + this.textAfterMarker2,
                 theirUnequalLines.join(Constants.lineSeparator),
-                Constants.conflictMarker3 + this.theirBranch,
+                Constants.conflictMarker3 + this.textAfterMarker3,
                 equalBottomText
             ];
         }
@@ -79,11 +80,15 @@ export class Conflict {
         this.theirLines.push(line);
     }
 
-    public setOurBranch(branch: string): void {
-        this.ourBranch = branch;
+    public setTextAfterMarker1(text: string): void {
+        this.textAfterMarker1 = text;
     }
 
-    public setTheirBranch(branch: string): void {
-        this.theirBranch = branch;
+    public setTextAfterMarker2(text: string): void {
+        this.textAfterMarker2 = text;
+    }
+
+    public setTextAfterMarker3(text: string): void {
+        this.textAfterMarker3 = text;
     }
 }
