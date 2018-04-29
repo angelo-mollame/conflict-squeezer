@@ -1,7 +1,8 @@
 "use strict";
 
 export class Constants {
-    public static conflictMarker1 = "<<<<<<< ";
-    public static conflictMarker2 = "=======";
-    public static conflictMarker3 = ">>>>>>> ";
+    public static conflictMarkerOurs =     "<<<<<<<";
+    public static conflictMarkerOriginal = "|||||||";
+    public static conflictMarkerTheirs =   "=======";
+    public static conflictMarkerEnd =      ">>>>>>>";
 }

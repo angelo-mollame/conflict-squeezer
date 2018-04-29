@@ -252,6 +252,47 @@ function runTestsWithLineSeparator(lineSeparator: string): void {
 
             verifyNoChanges(inputText);
         });
+
+    runTestWithLineSeparator(
+        "diff3 - conflict not resolved",
+        lineSeparator,
+        () => {
+            const inputText =
+                "aaa" + lineSeparator +
+                "<<<<<<< HEAD" + lineSeparator +
+                "bbb1" + lineSeparator +
+                "||||||| merged common ancestors" + lineSeparator +
+                "zzz" + lineSeparator +
+                "=======" + lineSeparator +
+                "bbb2" + lineSeparator +
+                ">>>>>>> master" + lineSeparator +
+                "ccc" + lineSeparator;
+
+            verifyNoChanges(inputText);
+        });
+
+    runTestWithLineSeparator(
+        "diff3 - conflict removed",
+        lineSeparator,
+        () => {
+            const inputText =
+                "aaa" + lineSeparator +
+                "<<<<<<< HEAD" + lineSeparator +
+                "bbb" + lineSeparator +
+                "||||||| merged common ancestors" + lineSeparator +
+                "zzz" + lineSeparator +
+                "=======" + lineSeparator +
+                "bbb" + lineSeparator +
+                ">>>>>>> master" + lineSeparator +
+                "ccc" + lineSeparator;
+
+            const expectedOutputText =
+                "aaa" + lineSeparator +
+                "bbb" + lineSeparator +
+                "ccc" + lineSeparator;
+
+            testSqueeze(inputText, expectedOutputText);
+        });
 }
 
 function testSqueeze(inputText: string, expectedOutputText: string): void {

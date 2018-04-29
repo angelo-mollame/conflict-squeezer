@@ -42,20 +42,25 @@ export class Parser {
         const sections: ISection[] = [];
         const lines: string[] = Parser.getLines(text);
 
-        // State 0: outside the conflict
-        // State 1: between "<<<<<<< our-branch" and "======="
-        // State 2: between "=======" and ">>>>>>> their-branch"
-        let state: number = 0;
+        let state: ParserState = ParserState.OutsideConflict;
         let currentConflict: Conflict | undefined = undefined;
         let currentTextLines: string[] = [];
 
         for (const line of lines) {
-            const startsWithMarker1Result: StartsWithResult = StringUtils.startsWith(line, Constants.conflictMarker1);
-            const startsWithMarker2Result: StartsWithResult = StringUtils.startsWith(line, Constants.conflictMarker2);
-            const startsWithMarker3Result: StartsWithResult = StringUtils.startsWith(line, Constants.conflictMarker3);
+            const startsWithMarkerOursResult: StartsWithResult =
+                StringUtils.startsWith(line, Constants.conflictMarkerOurs);
 
-            if (startsWithMarker1Result.success) {
-                if (state !== 0) {
+            const startsWithMarkerOriginalResult: StartsWithResult =
+                StringUtils.startsWith(line, Constants.conflictMarkerOriginal);
+
+            const startsWithMarkerTheirsResult: StartsWithResult =
+                StringUtils.startsWith(line, Constants.conflictMarkerTheirs);
+
+            const startsWithMarkerEndResult: StartsWithResult =
+                StringUtils.startsWith(line, Constants.conflictMarkerEnd);
+
+            if (startsWithMarkerOursResult.success) {
+                if (state !== ParserState.OutsideConflict) {
                     throw new Error("Unexpected conflict marker");
                 }
 
@@ -65,30 +70,40 @@ export class Parser {
                 }
 
                 currentConflict = new Conflict();
-                currentConflict.setTextAfterMarker1(startsWithMarker1Result.remainingText);
-                state = 1;
-            } else if (startsWithMarker2Result.success) {
-                if (state !== 1) {
+                currentConflict.setTextAfterMarkerOurs(startsWithMarkerOursResult.remainingText);
+                state = ParserState.Ours;
+            } else if (startsWithMarkerOriginalResult.success) {
+                if (state !== ParserState.Ours) {
                     throw new Error("Unexpected conflict marker");
                 }
 
-                currentConflict!.setTextAfterMarker2(startsWithMarker2Result.remainingText);
-                state = 2;
-            } else if (startsWithMarker3Result.success) {
-                if (state !== 2) {
+                currentConflict!.hasOriginal = true;
+                currentConflict!.setTextAfterMarkerOriginal(startsWithMarkerOriginalResult.remainingText);
+                state = ParserState.Original;
+            } else if (startsWithMarkerTheirsResult.success) {
+                if (state !== ParserState.Ours && state !== ParserState.Original) {
                     throw new Error("Unexpected conflict marker");
                 }
 
-                currentConflict!.setTextAfterMarker3(startsWithMarker3Result.remainingText);
+                currentConflict!.setTextAfterMarkerTheirs(startsWithMarkerTheirsResult.remainingText);
+                state = ParserState.Theirs;
+            } else if (startsWithMarkerEndResult.success) {
+                if (state !== ParserState.Theirs) {
+                    throw new Error("Unexpected conflict marker");
+                }
+
+                currentConflict!.setTextAfterMarkerEnd(startsWithMarkerEndResult.remainingText);
                 sections.push(new ConflictSection(currentConflict!));
                 currentConflict = undefined;
-                state = 0;
+                state = ParserState.OutsideConflict;
             } else {
-                if (state === 0) {
+                if (state === ParserState.OutsideConflict) {
                     currentTextLines.push(line);
-                } else if (state === 1) {
+                } else if (state === ParserState.Ours) {
                     currentConflict!.addOurLine(line);
-                } else if (state === 2) {
+                } else if (state === ParserState.Original) {
+                    currentConflict!.addOriginalLine(line);
+                } else if (state === ParserState.Theirs) {
                     currentConflict!.addTheirLine(line);
                 } else {
                     throw new Error("Unexpected state");
@@ -106,4 +121,11 @@ export class Parser {
 
         return sections;
     }
+}
+
+const enum ParserState {
+    OutsideConflict,
+    Ours,
+    Original,
+    Theirs
 }
