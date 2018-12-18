@@ -24,7 +24,7 @@ the "Squeeze Conflicts" command will remove the conflict.
 
 ## Change Log
 
-### 1.0.0
+### 1.0.1
 
 - Added icon
 
