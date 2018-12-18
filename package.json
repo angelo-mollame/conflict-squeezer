@@ -2,7 +2,7 @@
     "name": "conflict-squeezer",
     "displayName": "Conflict Squeezer",
     "description": "Simplifies the resolution of Git merge conflicts through the editor",
-    "version": "0.0.3",
+    "version": "1.0.0",
     "publisher": "angelomollame",
     "repository": {
         "type": "git",
@@ -18,11 +18,14 @@
         "onCommand:conflictSqueezer.squeezeConflicts"
     ],
     "main": "./out/extension/Extension",
+    "icon": "conflict-squeezer.png",
     "contributes": {
-        "commands": [{
-            "command": "conflictSqueezer.squeezeConflicts",
-            "title": "Squeeze Conflicts"
-        }]
+        "commands": [
+            {
+                "command": "conflictSqueezer.squeezeConflicts",
+                "title": "Squeeze Conflicts"
+            }
+        ]
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",

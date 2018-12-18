@@ -24,6 +24,10 @@ the "Squeeze Conflicts" command will remove the conflict.
 
 ## Change Log
 
+### 1.0.0
+
+- Added icon
+
 ### 0.0.3
 
 - Added support for diff3 format.
